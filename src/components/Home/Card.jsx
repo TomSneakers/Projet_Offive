@@ -17,10 +17,8 @@ function Card({ product }) {
                 <div className="card-body text-center">
                     <h4 className="card-title">
                         <Link
-                            to={{
-                                pathname: "/product",
-                                state: { product },
-                            }}
+                            to={"/product"}
+                            state={{ product }}
                             className="font-weight-bold text-dark text-uppercase small"
                         >
                             {name}
