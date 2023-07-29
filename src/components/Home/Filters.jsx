@@ -2,7 +2,7 @@ import React from "react";
 import { Context } from "../../context/index.jsx";
 const Filters = {
   Category: function ({ name }) {
-    const { updateCategory, category } = React.useContext(Context)
+    const { updateCategory, category } = React.useContext(Context);
     const handleOnChange = (e) => updateCategory(e.target.value);
     return (
       <div className="mt-2 mb-2 pl-2">
@@ -25,7 +25,7 @@ const Filters = {
     );
   },
   Filter: function ({ name }) {
-    const { updateFilters } = React.useContext(Context)
+    const { updateFilters } = React.useContext(Context);
     return (
       <div className="mt-2 mb-2 pl-2">
         <div className="custom-control custom-checkbox">
