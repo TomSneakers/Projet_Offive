@@ -13,6 +13,7 @@ function Product() {
       name: product.name,
       filter: product.filter,
       price: product.price,
+      category: product.category,
     };
     dispatch(addToCart({ ...item, ...details }));
   };
