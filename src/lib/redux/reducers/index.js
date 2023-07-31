@@ -17,10 +17,23 @@ function reducer(state = { items: [] }, action) {
                     return item
                 })
             }
+        case "REMOVE_FROM_CART":
+            return {
+                items: state.items.filter((item) => item.id !== action.payload.id
 
+                )
+
+            }
 
         default:
             return state
+    }
+}
+
+export function removeFromCart(id) {
+    return {
+        type: "REMOVE_FROM_CART",
+        payload: { id }
     }
 }
 

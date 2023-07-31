@@ -18,8 +18,8 @@ function Card({ product }) {
           <h4 className="card-title">
             <Link
               to={"/product"}
-              state={{ product }}
-              className="font-weight-bold text-dark text-uppercase small"
+              state={{ product: product }}
+              className="font-weight-bold text -dark text-uppercase small"
             >
               {name}
             </Link>

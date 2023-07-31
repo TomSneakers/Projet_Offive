@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import selectCartTotal  from "../../lib/redux/selector/index.js";
+import { useSelector } from "react-redux";
 
 // const styles = {
 //   disabled: {
@@ -9,11 +11,12 @@ import { Link } from "react-router-dom";
 // }
 
 function CartFooter() {
+  const total = useSelector(selectCartTotal)
   return (
     <>
       <div className="text-right mb-4">
         <h4>Subtotal:</h4>
-        <h1>€0.00</h1>
+        <h1>${total.toFixed(2  )}</h1>
       </div>
       <div className="d-flex justify-content-between">
         <Link to="/">

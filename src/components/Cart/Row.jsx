@@ -1,15 +1,22 @@
 import { useDispatch } from "react-redux";
-import { updateCart } from "../../lib/redux/reducers";
+import { updateCart, removeFromCart} from "../../lib/redux/reducers";
 function Row({ id, name, price, quantity, category }) {
   const dispatch = useDispatch();
+  const minValue = 1;
 
   const handleOnChange = (e) => {
-    dispatch(updateCart(id, e.target.value));
+    const newValue = Number(e.target.value);
+    const newQuantity = newValue >= 1 ? newValue : 1;
+    dispatch(updateCart(id, newQuantity));
   };
-
+  
+  const handleOnClick = () => {
+    dispatch(removeFromCart(id))
+  }
+  const totalPrice = price * quantity
   return (
     <tr>
-      <td data-th="Product">
+      <td data-th="Product" style={{ width: "60%" }}>
         <div className="row">
           <div className="col-md-3 text-left">
             <img
@@ -23,13 +30,15 @@ function Row({ id, name, price, quantity, category }) {
           </div>
         </div>
       </td>
-      <td data-th="Price">${price}</td>
+      <td data-th="Prix total" style={{ width: "12%" }}>${totalPrice.toFixed(2)}</td>
+      <td data-th="Prix Unitaire" style={{ width: "12%" }}>${price}</td>
       <td data-th="Quantity">
         <input
           type="number"
           className="form-control form-control-lg text-center"
           value={quantity}
           onChange={handleOnChange}
+          style={{ width: "60%" }}
         />
       </td>
 
@@ -38,7 +47,7 @@ function Row({ id, name, price, quantity, category }) {
           {/* <button className="btn btn-white border-secondary bg-white btn-md mb-2">
             <i className="fas fa-sync"></i>
           </button> */}
-          <button className="btn btn-white border-secondary bg-white btn-md mb-2">
+          <button onClick={handleOnClick} className="btn btn-white border-secondary bg-white btn-md mb-2">
             <i className="fas fa-trash"></i>
           </button>
         </div>

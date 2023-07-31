@@ -7,7 +7,7 @@ import Row from "./Row.jsx";
 function Cart() {
   const items = useSelector((state) => state.items);
   return (
-    <Table
+    <Table 
       items={items}
       heading="My Shopping Cart"
       subheading="items in your cart"
@@ -18,7 +18,7 @@ function Cart() {
           <Row key={item.id} {...item} />
         ))}
       </tbody>
-      <CartFooter />
+      <CartFooter  />
     </Table>
   );
 }

@@ -5,8 +5,11 @@ import { addToCart } from "../lib/redux/reducers";
 function Product() {
   const location = useLocation();
   const product = location.state.product;
+  
   const [details, setDetails] = useState({ quantity: 1, size: "small" });
+
   const dispatch = useDispatch();
+
   const addCart = () => {
     const item = {
       id: product.id,
