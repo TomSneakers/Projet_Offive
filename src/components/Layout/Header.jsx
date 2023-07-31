@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { useSelector, useStore } from 'react-redux';
+import { useSelector } from 'react-redux';
 import selectCartTotal from '../../lib/redux/selector';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 function  CartDropdown({ show, handleOnClick }) {
 	const items = useSelector((state) => state.items);
 	const total = useSelector(selectCartTotal);
@@ -22,8 +24,13 @@ function  CartDropdown({ show, handleOnClick }) {
 							</div>
 							<div className="col-8">
 								<h6>
-								<Link to={{pathname: "/product", props: {product : item,}}}>{item.name}</Link>
-
+								<Link
+              to={"/product"}
+              state={{ product: item }}
+              className="font-weight-bold text -dark text-uppercase small"
+            >
+              {item.name}
+            </Link>
 								</h6>
 								<span className="text-muted">quantity : {item.quantity}</span><br />
 								<span className="emphasis">${(item.price * item.quantity).toFixed(2) }</span></div>

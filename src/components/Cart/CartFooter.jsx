@@ -3,15 +3,11 @@ import { Link } from "react-router-dom";
 import selectCartTotal  from "../../lib/redux/selector/index.js";
 import { useSelector } from "react-redux";
 
-// const styles = {
-//   disabled: {
-//     cursor: 'not-allowed',
-//     opacity: 0.5
-//   }
-// }
+ 
 
 function CartFooter() {
   const total = useSelector(selectCartTotal)
+  const items = useSelector((state) => state.items)
   return (
     <>
       <div className="text-right mb-4">
@@ -22,9 +18,14 @@ function CartFooter() {
         <Link to="/">
           <i className="fas fa-arrow-left mr-2"></i> Continue Shopping
         </Link>
-        <Link className="btn btn-primary mb-4 btn-lg pl-5 pr-5" to="/checkout">
-          Checkout
-        </Link>
+        <Link
+  className={`btn btn-primary mb-4 btn-lg pl-5 pr-5 ${items.length === 0 ? "disabled" : ""}`}
+  to="/checkout"
+  style={items.length === 0 ? { pointerEvents: "none" } : {}}
+>
+checkout</Link>
+          
+        
       </div>
     </>
   )

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Card({ product }) {
+function Card({ product}) {
   const { id, name, price } = product;
 
   return (
@@ -18,7 +18,7 @@ function Card({ product }) {
           <h4 className="card-title">
             <Link
               to={"/product"}
-              state={{ product: product }}
+              state={{ product }}
               className="font-weight-bold text -dark text-uppercase small"
             >
               {name}
