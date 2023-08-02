@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import App from "./App.jsx";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,7 +13,9 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+// Utilisez ReactDOM.createRoot().render() pour monter votre application dans le DOM
+
+ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <FilterProvider>
@@ -22,5 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </Provider>
       </FilterProvider>
     </ApolloProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root")
 );
+

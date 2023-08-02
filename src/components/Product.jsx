@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../lib/redux/reducers";
+import { addToCart } from "../lib/redux/reducers/cart";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 function Product() {
   const location = useLocation();
   const product = location.state.product;
-  
+
   const [details, setDetails] = useState({ quantity: 1, size: "small" });
 
   const dispatch = useDispatch();
@@ -82,7 +84,8 @@ function Product() {
               </div>
             </div>
             <button
-              className="btn btn-full-width btn-lg btn-outline-orange"
+              type="button"
+              className="btn btn-block btn-lg border border-orange text-orange"
               onClick={addCart}
             >
               Add to cart
