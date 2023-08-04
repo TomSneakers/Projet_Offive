@@ -8,6 +8,14 @@ export default function user(state = { current: null, error: null }, { type, pay
 
         case "ERROR_AUTH":
             return payload;
+        case "UPDATE_USER_PROFILE":
+            return {
+                ...state,
+                current: {
+                    ...state.current,
+                    ...payload.details 
+                }
+            }
 
         default:
             return state
@@ -28,5 +36,11 @@ export function handleErrors(err) {
     return {
         type: "ERROR_AUTH",
         payload: { current: null, error: null }
+    }
+}
+export function updateUserProfile(details) {
+    return {
+        type: "UPDATE_USER_PROFILE",
+        payload: { details }
     }
 }

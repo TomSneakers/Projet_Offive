@@ -90,6 +90,7 @@ const GoogleBtn = () => {
             onFailure={handleLoginFailure}
             cookiePolicy={"single_host_origin"}
             responseType="code,token"
+            isSignedIn={true}
           />
         </>
       )}
