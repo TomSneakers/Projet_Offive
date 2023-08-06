@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Input from "./Input.jsx";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react"; // Remplacez useEffect par useRef pour éviter les boucles infinies
 import selectCartTotal from "../../lib/redux/selector/index.js";
 import Alert from "./Alert.jsx";
 import Row from "./Row.jsx";
@@ -12,10 +12,13 @@ const styles = {
   size: "large",
   color: "gold",
 };
+
+//Paypal Client
 const client = {
-  sandbox: "<ClientID>",
+  sandbox:
+    "AUboQQIoteZsspFW2IEMfW4F9HRGC7xV7Iltx3z5Uc3d5o08ld_PLS2XEwIM8BgY29hjkKdstIxczIfN",
   production: "<ClientID>",
-  env: "sandbox" /* change to 'production' for production purposes */,
+  env: "sandbox" /* Changer l'environnmenent lors de la mise en production*/,
 };
 
 const STATUS = {
@@ -29,8 +32,11 @@ const STATUS = {
 function Payment() {
   const items = useSelector((state) => state.cart.items);
   const total = useSelector(selectCartTotal);
+
   const [isValid, setValid] = useState(false);
   const [status, setStatus] = useState(STATUS.PENDING);
+
+  
   const processPayment = (payment) => {
     return new Promise((resolve) => {
       const data = {
@@ -48,7 +54,7 @@ function Payment() {
     });
   };
   const confirmOrder = () => {
-    debugger;
+    // debugger;
     return new Promise((resolve) => {
       setStatus(STATUS.CONFIRMED);
       // reset cart
@@ -67,9 +73,11 @@ function Payment() {
   };
 
   const onSuccess = async (payment) => {
+    console.log("Le paiement a été effectué avec succès !", payment);
     await processPayment(payment);
     setStatus(STATUS.COMPLETE);
   };
+
   const onCancel = async (data) => {
     console.log("The payment was cancelled!", data);
     setStatus(STATUS.CANCELLED);
@@ -78,6 +86,22 @@ function Payment() {
     console.log("Error!", err);
   };
   useEffect(() => setValid(status === STATUS.COMPLETE), [status]);
+
+  const paypalScriptRef = useRef(null);
+
+  useEffect(() => {
+    // Chargez le script PayPal avec le paramètre currency=EUR
+    paypalScriptRef.current = document.createElement("script");
+    paypalScriptRef.current.src = "https://www.paypal.com/sdk/js?currency=EUR";
+    paypalScriptRef.current.async = true;
+    document.body.appendChild(paypalScriptRef.current);
+    // Nettoyez le script lors du démontage du composant
+    return () => {
+      if (paypalScriptRef.current) {
+        paypalScriptRef.current.remove();
+      }
+    };
+  }, []);
 
   return (
     <section className="pt-5 pb-5">
@@ -157,12 +181,22 @@ function Payment() {
               <PayPalButtons
                 env={client.env}
                 client={client}
-                currency="EUR"
-                total={total}
+                createOrder={(data, actions) => {
+                  return actions.order.create({
+                    purchase_units: [
+                      {
+                        amount: {
+                          value: "20", // Utilisez le montant réel de la commande ici
+                        },
+                      },
+                    ],
+                  });
+                }}
                 onError={onError}
-                onSuccess={onSuccess}
+                onApprove={onSuccess}
                 onCancel={onCancel}
               />
+
               <hr className="mb-4" />
               <button
                 className="btn btn-primary btn-lg btn-block"

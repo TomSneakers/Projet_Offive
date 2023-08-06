@@ -21,7 +21,7 @@ ReactDOM.render(
     <ApolloProvider client={client}>
       <FilterProvider>
         <Provider store={store}>
-          <PayPalScriptProvider options={{ clientId: "test" }}>
+          <PayPalScriptProvider options={{ clientId: "test", currency: "EUR" }}>
             <App />
           </PayPalScriptProvider>
         </Provider>
