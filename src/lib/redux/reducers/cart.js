@@ -21,9 +21,18 @@ export default function cart(state = { items: [] }, action) {
                 )
 
             }
+        case "RESET_CART":
+            return {
+                items: []
+            }
 
         default:
             return state
+    }
+}
+export function resetCart() {
+    return {
+        type: "RESET_CART",
     }
 }
 

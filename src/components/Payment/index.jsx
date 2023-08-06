@@ -1,11 +1,16 @@
 import React, { useEffect } from "react";
-import Input from "./Input.jsx";
+// import Input from "./Input.jsx";
 import { PayPalButtons } from "@paypal/react-paypal-js";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useRef } from "react"; // Remplacez useEffect par useRef pour éviter les boucles infinies
 import selectCartTotal from "../../lib/redux/selector/index.js";
 import Alert from "./Alert.jsx";
 import Row from "./Row.jsx";
+import { scrolltoTop, nextDayDelevery } from "./utils.js";
+import { ADD_ORDER } from "../../lib/queries.js";
+import { useMutation } from "@apollo/client";
+import { resetCart } from "../../lib/redux/reducers/cart.js";
+import { useNavigate } from "react-router-dom";
 const styles = {
   width: "100%",
   shape: "rect",
@@ -30,13 +35,15 @@ const STATUS = {
 };
 
 function Payment() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.items);
   const total = useSelector(selectCartTotal);
-
+  const { current } = useSelector((state) => state.user);
+  const [mutate, loading] = useMutation(ADD_ORDER);
   const [isValid, setValid] = useState(false);
   const [status, setStatus] = useState(STATUS.PENDING);
 
-  
   const processPayment = (payment) => {
     return new Promise((resolve) => {
       const data = {
@@ -49,7 +56,17 @@ function Payment() {
   };
   const addOrder = () => {
     return new Promise((resolve) => {
-      console.log("order successfully confirmed and added");
+      const newOrder = {
+        id: new Date().getMilliseconds(),
+        ownerId: current.googleId,
+        clientDetails: `${current.familyName}, ${current.givenName}`,
+        date: new Date(),
+        pickupDate: nextDayDelevery(),
+        total: total,
+        items: items,
+      };
+      mutate({ variables: newOrder });
+      console.log("order successfully confirmed and added", newOrder);
       resolve();
     });
   };
@@ -57,8 +74,7 @@ function Payment() {
     // debugger;
     return new Promise((resolve) => {
       setStatus(STATUS.CONFIRMED);
-      // reset cart
-
+      dispatch(resetCart());
       resolve();
     });
   };
@@ -69,7 +85,7 @@ function Payment() {
     await addOrder();
     await confirmOrder();
     await scrolltoTop();
-    // history push
+    setTimeout(() => navigate("/"), 3000);
   };
 
   const onSuccess = async (payment) => {
@@ -84,24 +100,25 @@ function Payment() {
   };
   const onError = async (err) => {
     console.log("Error!", err);
+    setStatus(STATUS.FAILED);
   };
   useEffect(() => setValid(status === STATUS.COMPLETE), [status]);
 
   const paypalScriptRef = useRef(null);
 
-  useEffect(() => {
-    // Chargez le script PayPal avec le paramètre currency=EUR
-    paypalScriptRef.current = document.createElement("script");
-    paypalScriptRef.current.src = "https://www.paypal.com/sdk/js?currency=EUR";
-    paypalScriptRef.current.async = true;
-    document.body.appendChild(paypalScriptRef.current);
-    // Nettoyez le script lors du démontage du composant
-    return () => {
-      if (paypalScriptRef.current) {
-        paypalScriptRef.current.remove();
-      }
-    };
-  }, []);
+  // useEffect(() => {
+  //   // Chargez le script PayPal avec le paramètre currency=EUR
+  //   paypalScriptRef.current = document.createElement("script");
+  //   paypalScriptRef.current.src = "https://www.paypal.com/sdk/js?currency=EUR";
+  //   paypalScriptRef.current.async = true;
+  //   document.body.appendChild(paypalScriptRef.current);
+  //   // Nettoyez le script lors du démontage du composant
+  //   return () => {
+  //     if (paypalScriptRef.current) {
+  //       paypalScriptRef.current.remove();
+  //     }
+  //   };
+  // }, []);
 
   return (
     <section className="pt-5 pb-5">
@@ -119,7 +136,6 @@ function Payment() {
           <div className="col-md-4 offset-1 order-md-2 mb-4">
             <h4 className="d-flex justify-content-between align-items-center mb-3">
               <span className="text-muted">Your cart</span>
-              <span className="badge badge-secondary badge-pill">3</span>
             </h4>
             <ul className="list-group mb-3">
               {items?.map((item) => (
@@ -149,34 +165,7 @@ function Payment() {
             <form onSubmit={handleOnSubmit}>
               <h4 className="mb-3">Payment</h4>
               <hr className="mb-4" />
-              <div className="row">
-                <Input
-                  label="Name on the card"
-                  className="col-md-6 mb-3"
-                  id="cc-name"
-                >
-                  Name on card is required
-                </Input>
-                <Input
-                  label="Credit card number"
-                  className="col-md-6 mb-3"
-                  id="cc-number"
-                >
-                  Credit card number is required
-                </Input>
-              </div>
-              <div className="row">
-                <Input
-                  className="col-md-3 mb-3"
-                  label="Expiration"
-                  id="cc-expiration"
-                >
-                  Expiration date required
-                </Input>
-                <Input className="col-md-3 mb-3" label="CVV" id="cc-cvv">
-                  Security code required
-                </Input>
-              </div>
+
               {/* Paypal Button */}
               <PayPalButtons
                 env={client.env}
@@ -186,7 +175,7 @@ function Payment() {
                     purchase_units: [
                       {
                         amount: {
-                          value: "20", // Utilisez le montant réel de la commande ici
+                          value: total, // Utilisez le montant réel de la commande ici
                         },
                       },
                     ],
