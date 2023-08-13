@@ -1,21 +1,24 @@
 import { useDispatch } from "react-redux";
-import { updateCart, removeFromCart } from "../../lib/redux/reducers/cart";
+import { updateCart, removeFromCart } from "../../lib/redux/reducers/cart"; // Importe les actions pour mettre à jour le panier
 function Row({ id, name, price, quantity, category }) {
-  const dispatch = useDispatch();
- 
+  const dispatch = useDispatch(); // Initialise le dispatch pour envoyer des actions Redux
+
+  // Gère le changement de quantité dans l'input
   const handleOnChange = (e) => {
     const newValue = Number(e.target.value);
     const newQuantity = newValue >= 1 ? newValue : 1;
-    dispatch(updateCart(id, newQuantity));
+    dispatch(updateCart(id, newQuantity)); // Appelle l'action pour mettre à jour la quantité dans le panier
   };
 
+  // Gère le clic sur le bouton de suppression d'article
   const handleOnClick = () => {
-    dispatch(removeFromCart(id));
+    dispatch(removeFromCart(id)); // Appelle l'action pour supprimer l'article du panier
   };
-  const totalPrice = price * quantity;
+
+  const totalPrice = price * quantity; // Calcule le prix total pour cet article
   return (
     <tr>
-      <td data-th="Product" style={{ width: "60%" }}>
+      <td data-th="Produit" style={{ width: "60%" }}>
         <div className="row">
           <div className="col-md-3 text-left">
             <img
@@ -30,28 +33,26 @@ function Row({ id, name, price, quantity, category }) {
         </div>
       </td>
       <td data-th="Prix total" style={{ width: "12%" }}>
-        ${totalPrice.toFixed(2)}
+        €{totalPrice.toFixed(2)}
       </td>
       <td data-th="Prix Unitaire" style={{ width: "12%" }}>
-        ${price}
+        €{price}
       </td>
-      <td data-th="Quantity">
+      <td data-th="Quantité">
         <input
           type="number"
           className="form-control form-control-lg text-center"
           value={quantity}
-          onChange={handleOnChange}
+          onChange={handleOnChange} // Appelle la fonction de gestion du changement de quantité
           style={{ width: "60%" }}
         />
       </td>
 
       <td className="actions" data-th="">
         <div className="text-right">
-          {/* <button className="btn btn-white border-secondary bg-white btn-md mb-2">
-            <i className="fas fa-sync"></i>
-          </button> */}
+          {/* Bouton pour supprimer l'article du panier */}
           <button
-            onClick={handleOnClick}
+            onClick={handleOnClick} // Appelle la fonction de gestion du clic sur le bouton de suppression
             className="btn btn-white border-secondary bg-white btn-md mb-2"
           >
             <i className="fas fa-trash"></i>

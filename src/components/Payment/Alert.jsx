@@ -1,35 +1,43 @@
-import loader from "../../loader.svg";
+import loader from "../../loader.svg"; // Importe l'image du chargeur depuis le chemin spécifié
 
+// Définition d'un objet Alert qui contient des composants fonctionnels pour afficher différents types d'alertes
 const Alert = {
+  // Composant pour afficher une alerte d'erreur
   Error: ({ status }) => {
     return (
-      status && (
+      status && ( // Vérifie si le statut est vrai (non nul ou non faux)
         <div className="alert alert-danger" role="alert">
-          Transaction could not be completed - please try again &nbsp;
-          <i className="fas fa-times"></i>
+          La transaction n'a pas pu être complétée - veuillez réessayer &nbsp;
+          <i className="fas fa-times"></i> {/* Icône de croix (erreur) */}
         </div>
       )
     );
   },
+
+  // Composant pour afficher une alerte d'annulation
   Cancelled: ({ status }) => {
     return (
       status && (
         <div className="alert alert-warning" role="alert">
-          Transaction cancelled
+          Transaction annulée
         </div>
       )
     );
   },
+
+  // Composant pour afficher une alerte de confirmation
   Confirmed: ({ status }) => {
     return (
       status && (
         <div className="alert alert-success" role="alert">
-          Thank you for your order ❤️ - You will be redirected in a few seconds
-          ...
-          <img src={loader} className="App-logo ml-4" alt="loader" />
+          Merci pour votre commande ❤️ - Vous serez redirigé dans quelques
+          secondes...
+          <img src={loader} className="App-logo ml-4" alt="loader" />{" "}
+          {/* Affiche l'image du chargeur */}
         </div>
       )
     );
   },
 };
-export default Alert;
+
+export default Alert; // Exporte l'objet Alert contenant les composants d'alerte

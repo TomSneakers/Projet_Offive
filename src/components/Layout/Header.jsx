@@ -5,6 +5,7 @@ import selectCartTotal from "../../lib/redux/selector";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import GoogleBtn from "./GoogleBtn";
 
+// Composant CartDropdown pour afficher le panier déroulant
 function CartDropdown({ show, handleOnClick }) {
   const items = useSelector((state) => state.cart.items);
   const total = useSelector(selectCartTotal);
@@ -18,7 +19,7 @@ function CartDropdown({ show, handleOnClick }) {
     >
       <div className="d-flex justify-content-between">
         <span>
-          {items.length} {!!items.length && "items"}
+          {items.length} {!!items.length && "articles"}
         </span>
         <span className="emphasis">€{total.toFixed(2)}</span>
       </div>
@@ -42,12 +43,12 @@ function CartDropdown({ show, handleOnClick }) {
                   <Link
                     to={"/product"}
                     state={{ product: item }}
-                    className="font-weight-bold text -dark text-uppercase small"
+                    className="font-weight-bold text-dark text-uppercase small"
                   >
                     {item.name}
                   </Link>
                 </h6>
-                <span className="text-muted">quantity : {item.quantity}</span>
+                <span className="text-muted">quantité : {item.quantity}</span>
                 <br />
                 <span className="emphasis">
                   ${(item.price * item.quantity).toFixed(2)}
@@ -62,11 +63,13 @@ function CartDropdown({ show, handleOnClick }) {
         className="btn btn-md btn-block btn-orange mt-3"
         style={{ margin: 0 }}
       >
-        view cart
+        voir le panier
       </Link>
     </div>
   );
 }
+
+// Composant Header pour afficher l'en-tête de la page
 function Header() {
   const [currentLink] = React.useState("");
   const [show, setShow] = React.useState(false);
@@ -116,7 +119,7 @@ function Header() {
 
               <li className="nav-item dropdown" onClick={() => setShow(!show)}>
                 <a className={`nav-link dropdown-toggle ${show && "show"}`}>
-                  <i className="fas fa-shopping-cart"></i>{" "}
+                  <i className="fas fa-shopping-cart"></i>
                   <span className="badge bg-orange">{items.length}</span>
                 </a>
                 <CartDropdown show={show} handleOnClick={handleOnClick} />
@@ -129,4 +132,5 @@ function Header() {
     </header>
   );
 }
-export default Header;
+
+export default Header; // Exporte le composant Header

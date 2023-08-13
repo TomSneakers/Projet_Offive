@@ -12,10 +12,13 @@ const styles = {
     display: "block",
   },
 };
+
 function Checkout() {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const { current } = useSelector((state) => state.user);
+
+  // État local pour stocker les détails du client et les champs requis
   const [clientDetails, setClientDetails] = useState({
     givenName: current?.givenName,
     familyName: current?.familyName,
@@ -27,16 +30,21 @@ function Checkout() {
     email: false,
   });
 
+  // Gérer les changements dans les champs de saisie
   const handleOnChange = (e) =>
     setClientDetails((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+
+  // Gérer la soumission du formulaire
   const handleOnSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUserProfile(clientDetails));
     navigate("/payment");
   };
+
+  // Mettre à jour les détails du client lorsqu'ils changent dans le store Redux
   useEffect(() => {
     setClientDetails({
       givenName: current?.givenName,
@@ -45,6 +53,7 @@ function Checkout() {
     });
   }, [current]);
 
+  // Mettre à jour les champs requis lorsque les détails du client changent
   useEffect(() => {
     setRequired({
       givenName: !!clientDetails?.givenName?.length,
@@ -53,6 +62,7 @@ function Checkout() {
     });
   }, [clientDetails]);
 
+  // Vérifier si tous les champs requis sont remplis
   const isValid = useMemo(() => {
     let errors = [];
     Object.entries(required).map(([key, value]) => {
@@ -68,7 +78,7 @@ function Checkout() {
       <div className="container">
         <div className="py-5 text-center row justify-content-center">
           <div className="col-md-10">
-            <h2>Client Details :</h2>
+            <h2>Détails du Client :</h2>
           </div>
         </div>
         <div className="row justify-content-center rounded shadow pt-5 pb-5 bg-white ">
@@ -76,13 +86,13 @@ function Checkout() {
             <form className="needs-validation" onSubmit={handleOnSubmit}>
               <div className="row">
                 <div className="col-md-6 mb-3">
-                  <label htmlFor="firstName">First name</label>
+                  <label htmlFor="firstName">Prénom</label>
                   <input
                     className="form-control"
                     type="text"
                     name="givenName"
                     id="firstName"
-                    placeholder="please enter first name"
+                    placeholder="Veuillez entrer votre prénom"
                     value={clientDetails.givenName}
                     onChange={handleOnChange}
                   />
@@ -91,18 +101,18 @@ function Checkout() {
                       !!clientDetails.givenName ? styles.valid : styles.errors
                     }
                   >
-                    Valid first name is required.
+                    Un prénom valide est requis.
                   </small>
                 </div>
 
                 <div className="col-md-6 mb-3">
-                  <label htmlFor="lastName">Last name</label>
+                  <label htmlFor="lastName">Nom de famille</label>
                   <input
                     className="form-control"
                     type="text"
                     name="familyName"
                     id="lastName"
-                    placeholder="please enter last name"
+                    placeholder="Veuillez entrer votre nom de famille"
                     value={clientDetails.familyName}
                     onChange={handleOnChange}
                   />
@@ -111,28 +121,30 @@ function Checkout() {
                       !!clientDetails.familyName ? styles.valid : styles.errors
                     }
                   >
-                    Valid last name is required.
+                    Un nom de famille valide est requis.
                   </small>
                 </div>
               </div>
 
               <div className="mb-3">
                 <label htmlFor="email">
-                  Email <span className="text-muted">(Optional)</span>
+                  Adresse e-mail
+                  <span className="text-muted">(Facultatif)</span>
                 </label>
                 <input
                   className="form-control"
                   type="email"
                   name="email"
                   id="email"
-                  placeholder="you@example.com"
+                  placeholder="vous@exemple.com"
                   value={clientDetails.email}
                   onChange={handleOnChange}
                 />
                 <small
                   style={!!clientDetails.email ? styles.valid : styles.errors}
                 >
-                  Please enter a valid email address for order updates
+                  Veuillez entrer une adresse e-mail valide pour les mises à
+                  jour de commande.
                 </small>
               </div>
 
@@ -141,7 +153,7 @@ function Checkout() {
                 type="submit"
                 disabled={!isValid}
               >
-                Continue to checkout
+                Continuer vers le paiement
               </button>
             </form>
           </div>
@@ -150,4 +162,5 @@ function Checkout() {
     </section>
   );
 }
+
 export default Checkout;

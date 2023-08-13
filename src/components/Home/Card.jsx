@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Card({ product}) {
-  const { id, name, price } = product;
+// Composant Card pour afficher les détails d'un produit sous forme de carte
+function Card({ product }) {
+  const { id, name, price } = product; // Destructuration des propriétés du produit
 
   return (
     <div className="col-6 col-md-6 col-lg-4 mb-3">
@@ -19,7 +20,7 @@ function Card({ product}) {
             <Link
               to={"/product"}
               state={{ product }}
-              className="font-weight-bold text -dark text-uppercase small"
+              className="font-weight-bold text-dark text-uppercase small" // Classe de style pour le texte en gras et en majuscules
             >
               {name}
             </Link>
@@ -30,4 +31,4 @@ function Card({ product}) {
     </div>
   );
 }
-export default Card;
+export default Card; // Exporte le composant Card

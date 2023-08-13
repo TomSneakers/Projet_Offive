@@ -4,6 +4,7 @@ import { GET_PRODUCTS } from "../../lib/queries";
 import Card from "./Card.jsx";
 import { Context } from "../../context/index.jsx";
 
+// Styles pour la galerie d'images
 const styles = {
   gallery: {
     height: "calc(100vh - 120px)",
@@ -11,13 +12,15 @@ const styles = {
   },
 };
 
+// Composant de la galerie d'images
 function Gallery({ category }) {
-  const { filtersChecked } = React.useContext(Context);
-  let array = [];
+  const { filtersChecked } = React.useContext(Context); // Obtient les filtres cochés depuis le contexte
+  let array = []; // Tableau pour stocker les produits avec filtres
   const { loading, error, data } = useQuery(GET_PRODUCTS, {
     variables: { category: category },
   });
 
+  // Fonction pour obtenir les produits avec filtres
   const productWithFilters = () => {
     if (!filtersChecked.length) {
       return data?.products;
@@ -32,17 +35,19 @@ function Gallery({ category }) {
     });
     return array;
   };
+
+  // Gestion des différents états de chargement et d'erreur
   if (loading) return <div>En cours de chargement...</div>;
   if (error) return <div>Une erreur est survenue...</div>;
   if (!data) return <div>Aucune donnée trouvée...</div>;
 
-  const products = productWithFilters();
+  const products = productWithFilters(); // Obtenir les produits avec filtres
   return (
     <div className="col-md-8 order-md-2 col-lg-9">
       <div className="container-fluid" style={styles.gallery}>
         <div className="row">
           {products.map((product) => (
-            <Card key={product.id} product={product} />
+            <Card key={product.id} product={product} /> // Affiche chaque produit sous forme de carte
           ))}
         </div>
       </div>
@@ -50,4 +55,4 @@ function Gallery({ category }) {
   );
 }
 
-export default Gallery;
+export default Gallery; // Exporte le composant de la galerie d'images

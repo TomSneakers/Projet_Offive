@@ -1,26 +1,31 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { Table } from "../components";
+import { Table } from "../components"; // Importe le composant 'Table' depuis le dossier 'components'
 import { useSelector } from "react-redux";
-import { GET_ORDERS } from "../../lib/queries";
-import Row from "./Row";
+import { GET_ORDERS } from "../../lib/queries"; // Importe la requête 'GET_ORDERS' depuis le dossier 'lib/queries'
+import Row from "./Row"; // Importe le composant 'Row' depuis le dossier actuel ('.')
 
 function Orders() {
+  // Définit le composant fonctionnel 'Orders'
   const { current } = useSelector((state) => state.user);
   const { loading, error, data } = useQuery(GET_ORDERS, {
     variables: { ownerId: current?.googleId || "" },
   });
 
   const items = data?.orders;
+
   return (
+    // Rendu JSX du composant 'Orders'
     <div>
       <Table
-        heading="My Orders"
-        subheading="orders in your account"
+        heading="Mes commandes"
+        subheading="commandes dans votre compte"
         items={items}
       >
         <tbody>
-          {!items?.length && <div>No Items in the cart yet </div>}
+          {!items?.length && (
+            <div>Aucun article dans le panier pour le moment </div>
+          )}
           {items?.map((item, index) => (
             <Row key={`${item.id}-${index}`} {...item} />
           ))}
@@ -29,7 +34,7 @@ function Orders() {
       <div className="row mt-4 d-flex">
         <div className="col-sm-4 mb-3 mb-m-1 text-md-left">
           <Link to="/">
-            <i className="fas fa-arrow-left mr-2"></i> Continue Shopping
+            <i className="fas fa-arrow-left mr-2"></i> Continuer les achats
           </Link>
         </div>
       </div>
@@ -37,4 +42,4 @@ function Orders() {
   );
 }
 
-export default Orders;
+export default Orders; // Exporte le composant 'Orders'

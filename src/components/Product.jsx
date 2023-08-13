@@ -1,18 +1,21 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../lib/redux/reducers/cart";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from "react"; // Importation du module 'React' et 'useState' depuis la bibliothèque React
+import { Link, useLocation } from "react-router-dom"; // Importation des composants 'Link' et 'useLocation' depuis 'react-router-dom'
+import { useDispatch } from "react-redux"; // Importation de la fonction 'useDispatch' depuis Redux
+import { addToCart } from "../lib/redux/reducers/cart"; // Importation de l'action 'addToCart' depuis le répertoire 'cart' dans le dossier Redux
+import "bootstrap/dist/css/bootstrap.min.css"; // Importation des styles Bootstrap
 
+// Définition du composant 'Product'
 function Product() {
-  const location = useLocation();
-  const product = location.state.product;
+  const location = useLocation(); // Récupération de l'emplacement courant depuis 'useLocation'
+  const product = location.state.product; // Extraction du produit à partir de l'emplacement
 
+  // États locaux pour les détails du produit (quantité et taille) et le prix
   const [details, setDetails] = useState({ quantity: 1, size: "" });
   const [price, setPrice] = useState(product.price);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // Initialisation de la fonction de dispatch Redux
 
+  // Fonction pour ajouter le produit au panier
   const addCart = () => {
     if (details.size === "") {
       alert("Veuillez sélectionner une taille.");
@@ -25,9 +28,10 @@ function Product() {
       price: price,
       category: product.category,
     };
-    dispatch(addToCart({ ...item, ...details }));
+    dispatch(addToCart({ ...item, ...details })); // Appel à l'action 'addToCart' avec les détails du produit
   };
 
+  // Gestionnaire de changement pour les entrées de l'utilisateur
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     if (name === "size") {
@@ -38,14 +42,15 @@ function Product() {
       } else if (newSize === "large") {
         newPrice = product.price + 20;
       }
-      setPrice(newPrice);
+      setPrice(newPrice); // Mise à jour du prix en fonction de la taille sélectionnée
     }
     setDetails((prevState) => ({
       ...prevState,
       [name]: value,
-    }));
+    })); // Mise à jour des détails du produit
   };
 
+  // Rendu du composant Product
   return (
     <section className="pt-5 pb-5">
       <div className="container">
@@ -129,4 +134,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default Product; // Exportation du composant 'Product' par défaut

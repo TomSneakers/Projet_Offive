@@ -21,35 +21,52 @@ const styles = {
   },
 };
 
+// Composant GoogleBtn
 const GoogleBtn = () => {
+  // ID client Google
   const CLIENT_ID =
     "583235865601-bju681ptvf4j3cuuhsgmdvao4hvsb7hc.apps.googleusercontent.com";
+
+  // Récupération du dispatcheur Redux
   const dispatch = useDispatch();
+
+  // Sélection des données utilisateur depuis le state Redux
   const { current, error } = useSelector((state) => state.user);
 
+  // Gestionnaire de succès de connexion
   const handleLoginSuccess = (response) => {
     dispatch(handleLogin(response.profileObj));
     console.log(response);
   };
 
+  // Gestionnaire de succès de déconnexion
   const handleLogoutSuccess = () => {
     dispatch(handleLogout());
   };
+
+  // Gestionnaire d'échec de connexion
   const handleLoginFailure = (response) => {
     dispatch(handleErrors({ ...response.error, ...response.details }));
   };
+
+  // Gestionnaire d'échec de déconnexion
   const handleLogoutFailure = (response) => {
     dispatch(handleErrors({ ...response.error, ...response.details }));
   };
 
+  // Initialisation du client d'authentification Google
   const initializeAuthClient = () => {
     gapi.load("client:auth2", () => {
       gapi.auth2.init({ client_id: CLIENT_ID });
     });
   };
+
+  // Utilisation de useEffect pour initialiser le client d'authentification au chargement
   useEffect(() => {
     initializeAuthClient();
   }, []);
+
+  // Rendu JSX du composant GoogleBtn
   return (
     <>
       {current ? (
@@ -97,4 +114,5 @@ const GoogleBtn = () => {
     </>
   );
 };
-export default GoogleBtn;
+
+export default GoogleBtn; // Exporte le composant GoogleBtn
