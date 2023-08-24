@@ -4,15 +4,25 @@ import { Table } from "../components"; // Importe le composant 'Table' depuis le
 import { useSelector } from "react-redux";
 import { GET_ORDERS } from "../../lib/queries"; // Importe la requête 'GET_ORDERS' depuis le dossier 'lib/queries'
 import Row from "./Row"; // Importe le composant 'Row' depuis le dossier actuel ('.')
+import { useEffect, useState } from "react";
 
 function Orders() {
   // Définit le composant fonctionnel 'Orders'
   const { current } = useSelector((state) => state.user);
-  const { loading, error, data } = useQuery(GET_ORDERS, {
-    variables: { ownerId: current?.googleId || "" },
-  });
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const items = data?.orders;
+  useEffect(() => {
+    GET_ORDERS().then((response) => {
+      const orders = response.filter(
+        (item) => item.ownerId === current?.googleId
+      );
+      setItems(orders);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     // Rendu JSX du composant 'Orders'

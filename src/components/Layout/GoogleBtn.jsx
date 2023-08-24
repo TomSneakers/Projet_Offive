@@ -25,7 +25,7 @@ const styles = {
 const GoogleBtn = () => {
   // ID client Google
   const CLIENT_ID =
-    "583235865601-bju681ptvf4j3cuuhsgmdvao4hvsb7hc.apps.googleusercontent.com";
+    "583235865601-sheej31hbadletk0k97eu2fd151pdt0j.apps.googleusercontent.com";
 
   // Récupération du dispatcheur Redux
   const dispatch = useDispatch();

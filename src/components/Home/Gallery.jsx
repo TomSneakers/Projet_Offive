@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
-import {useQuery} from "@apollo/client";
-import {GET_PRODUCTS, service} from "../../lib/queries";
+import { service} from "../../lib/queries";
 import Card from "./Card.jsx";
 import {Context} from "../../context/index.jsx";
 
@@ -15,7 +14,6 @@ const styles = {
 // Composant de la galerie d'images
 function Gallery() {
     const {category} = React.useContext(Context); // Obtient les filtres cochés depuis le contexte
-    let array = []; // Tableau pour stocker les produits avec filtres
 
     const [products, setProducts] = React.useState([]); // State pour stocker les produits avec filtres
     const [loading, setLoading] = React.useState(true); // State pour le chargement
@@ -45,22 +43,6 @@ function Gallery() {
                 setLoading(false);
             });
     }, [category]);
-
-    // Fonction pour obtenir les produits avec filtres
-    const productWithFilters = () => {
-        if (!filtersChecked.length) {
-            return data?.products;
-        }
-        filtersChecked.forEach((filter) => {
-            array = [
-                ...array,
-                ...data?.products?.filter(
-                    (product) => product.filter === filter.toLowerCase()
-                ),
-            ];
-        });
-        return array;
-    };
 
     // Gestion des différents états de chargement et d'erreur
     if (loading) return <div>En cours de chargement...</div>;
