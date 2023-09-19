@@ -10,6 +10,7 @@ import Orders from "./components/Orders/index.jsx"; // Importation du composant 
 import Payment from "./components/Payment/index.jsx"; // Importation du composant 'Payment' depuis le répertoire 'components/Payment'
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import Politique from "./components/Layout/Politique";
 function App() {
   // Définition du composant fonctionnel App
   return (
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           {/* Utilisation du composant Routes pour définir les différentes routes de l'application */}
           <Route path="/" element={<Home />} />
+          <Route path="/Politique-de-confidentialité" element={<Politique />} />
           {/* Définition de la route '/' pour afficher le composant Home */}
           <Route path="/cart" element={<Cart />} />
           {/* Définition de la route '/cart' pour afficher le composant Cart */}

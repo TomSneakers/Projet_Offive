@@ -88,7 +88,7 @@ function Header() {
           >
             CLICK & COLLECT
           </Link>
-          <button
+          {/* <button
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
@@ -97,8 +97,8 @@ function Header() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+            <span className="navbar-toggler-icon">hello</span>
+          </button> */}
           <div className="navbar-collapse collapse" id="navbarNav3">
             <ul className="navbar-nav ml-auto">
               {links.map((link, index) => {

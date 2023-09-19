@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   // Définit la fonction 'Footer' qui représente le pied de page du site.
   return (
@@ -11,6 +13,11 @@ function Footer() {
           <small>
             &copy; Droits d'auteur {new Date().getFullYear()} - Tous droits
             réservés
+          </small>
+          <small className="ms-5">
+            <Link to="/Politique-de-confidentialité">
+              Politique de confidentialité
+            </Link>
           </small>
           {/* Texte de droits d'auteur avec année actuelle */}
         </footer>
