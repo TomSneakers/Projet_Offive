@@ -33,7 +33,7 @@ function CartDropdown({ show, handleOnClick }) {
             <li className="row mt-3" key={item.id}>
               <div className="col-md-4 col-2">
                 <img
-                  src={`images/${item.id}.png`}
+                  src={item.imageUrl}
                   alt=""
                   className="img-fluid rounded mb-2 shadow"
                 />

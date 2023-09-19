@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
-import { updateCart, removeFromCart } from "../../lib/redux/reducers/cart"; // Importe les actions pour mettre à jour le panier
-function Row({ id, name, price, quantity, category }) {
+import { updateCart, removeFromCart } from "../../lib/redux/reducers/cart";
+import product from "../Product.jsx"; // Importe les actions pour mettre à jour le panier
+function Row({ id, name, price, quantity, category, imageUrl }) {
   const dispatch = useDispatch(); // Initialise le dispatch pour envoyer des actions Redux
 
   // Gère le changement de quantité dans l'input
@@ -22,7 +23,7 @@ function Row({ id, name, price, quantity, category }) {
         <div className="row">
           <div className="col-md-3 text-left">
             <img
-              src={`images/${id}.png`}
+              src={imageUrl}
               className="img-fluid d-none d-md-block rounded mb-2 shadow"
             />
           </div>

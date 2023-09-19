@@ -26,6 +26,7 @@ function Product() {
       name: product.name,
       filter: product.filter,
       price: price,
+      imageUrl: product.imageUrl,
       category: product.category,
     };
     dispatch(addToCart({ ...item, ...details })); // Appel à l'action 'addToCart' avec les détails du produit
@@ -59,7 +60,7 @@ function Product() {
             <div className="product-image d-block mt-3">
               <img
                 className="img-fluid"
-                src={`images/${product.id}.png`}
+                src={product.imageUrl}
                 alt={product.name}
               />
             </div>
