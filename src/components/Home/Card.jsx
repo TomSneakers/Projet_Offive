@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 // Composant Card pour afficher les détails d'un produit sous forme de carte
 function Card({ product }) {
-  const { id, name, price } = product; // Destructuration des propriétés du produit
+  const { id, name, prices } = product; // Destructuration des propriétés du produit
 
   return (
     <div className="col-6 col-md-6 col-lg-4 mb-3">
@@ -25,7 +25,7 @@ function Card({ product }) {
               {name}
             </Link>
           </h4>
-          <h5 className="card-price small text-warning">€{price}</h5>
+          <h5 className="card-price small text-warning">{prices["sm"]}€</h5>
         </div>
       </div>
     </div>
