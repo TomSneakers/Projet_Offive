@@ -1,23 +1,23 @@
-import { useSelector } from "react-redux";
 import React from "react";
 import CartFooter from "./CartFooter.jsx"; // Importe le composant CartFooter
-import { Table } from "../components.jsx"; // Importe le composant Table
-import Row from "./Row.jsx"; // Importe le composant Row
+import {Table} from "../components.jsx"; // Importe le composant Table
+import Row from "./Row.jsx";
+import {useCart} from "./cartContext.jsx"; // Importe le composant Row
 
 function Cart() {
   // Sélectionne les articles du panier à l'aide du sélecteur useSelector
-  const items = useSelector((state) => state.cart.items);
+  const {cart} = useCart();
 
   return (
     <Table
-      items={items}
+      items={cart}
       heading="Mon Panier"
       subheading="articles dans votre panier"
     >
       {/* Affiche un message si le panier est vide */}
-      {!items.length && <div>Aucun article dans votre panier</div>}
+      {!cart.length && <div>Aucun article dans votre panier</div>}
       <tbody>
-        {items.map((item) => (
+        {cart.map((item) => (
           <Row
             key={item.id}
             {...item}

@@ -11,6 +11,7 @@ import { ADD_ORDER } from "../../lib/queries.js";
 import { useMutation } from "@apollo/client";
 import { resetCart } from "../../lib/redux/reducers/cart.js";
 import { useNavigate } from "react-router-dom";
+import {useCart} from "../Cart/cartContext.jsx";
 const styles = {
   width: "100%",
   shape: "rect",
@@ -37,8 +38,8 @@ const STATUS = {
 function Payment() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.cart.items);
-  const total = useSelector(selectCartTotal);
+  const {cart} = useCart();
+  const {total} = useCart();
   const { current } = useSelector((state) => state.user);
   const [mutate, loading] = useMutation(ADD_ORDER);
   const [isValid, setValid] = useState(false);
@@ -47,7 +48,7 @@ function Payment() {
   const processPayment = (payment) => {
     return new Promise((resolve) => {
       const data = {
-        cartDetails: items,
+        cartDetails: cart,
         paymentData: payment,
       };
       console.log("The payment was succeeded!", payment);
@@ -63,7 +64,7 @@ function Payment() {
         date: new Date(),
         pickupDate: nextDayDelevery(),
         total: total,
-        items: items,
+        items: cart,
       };
       mutate({ variables: newOrder });
       console.log("order successfully confirmed and added", newOrder);
@@ -138,7 +139,7 @@ function Payment() {
               <span className="text-muted">Your cart</span>
             </h4>
             <ul className="list-group mb-3">
-              {items?.map((item) => (
+              {cart?.map((item) => (
                 <Row key={item} {...item} />
               ))}
               <li className="list-group-item d-flex justify-content-between">

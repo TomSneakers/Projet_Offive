@@ -1,94 +1,92 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import selectCartTotal from "../../lib/redux/selector";
+import {Link} from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import GoogleBtn from "./GoogleBtn";
+import {useCart} from "../Cart/cartContext.jsx";
 
 // Composant CartDropdown pour afficher le panier déroulant
-function CartDropdown({ show, handleOnClick }) {
-  const items = useSelector((state) => state.cart.items);
-  const total = useSelector(selectCartTotal);
+function CartDropdown({show, handleOnClick}) {
+    const {cart, total} = useCart();
 
-  return (
-    <div
-      onClick={handleOnClick}
-      className={`dropdown-menu dropdown-menu-right p-3 ${show && "show"}`}
-      aria-labelledby="dropdownCart"
-      style={{ minWidth: "300px" }}
-    >
-      <div className="d-flex justify-content-between">
+    return (
+        <div
+            onClick={handleOnClick}
+            className={`dropdown-menu dropdown-menu-right p-3 ${show && "show"}`}
+            aria-labelledby="dropdownCart"
+            style={{minWidth: "300px"}}
+        >
+            <div className="d-flex justify-content-between">
         <span>
-          {items.length} {!!items.length && "articles"}
+          {cart.length} {!!cart.length && "articles"}
         </span>
-        <span className="emphasis">€{total.toFixed(2)}</span>
-      </div>
-      <div className="dropdown-divider"></div>
-      <ul
-        className="shopping-cart-items pt-2 pl-0"
-        aria-labelledby="dropdownCart"
-      >
-        {items.map((item) => {
-          return (
-            <li className="row mt-3" key={item.id}>
-              <div className="col-md-4 col-2">
-                <img
-                  src={item.imageUrl}
-                  alt=""
-                  className="img-fluid rounded mb-2 shadow"
-                />
-              </div>
-              <div className="col-8">
-                <h6>
-                  <Link
-                    to={"/product"}
-                    state={{ product: item }}
-                    className="font-weight-bold text-dark text-uppercase small"
-                  >
-                    {item.name}
-                  </Link>
-                </h6>
-                <span className="text-muted">quantité : {item.quantity}</span>
-                <br />
-                <span className="emphasis">
+                <span className="emphasis">€{total.toFixed(2)}</span>
+            </div>
+            <div className="dropdown-divider"></div>
+            <ul
+                className="shopping-cart-items pt-2 pl-0"
+                aria-labelledby="dropdownCart"
+            >
+                {cart.map((item) => {
+                    return (
+                        <li className="row mt-3" key={item.id}>
+                            <div className="col-md-4 col-2">
+                                <img
+                                    src={item.imageUrl}
+                                    alt=""
+                                    className="img-fluid rounded mb-2 shadow"
+                                />
+                            </div>
+                            <div className="col-8">
+                                <h6>
+                                    <Link
+                                        to={"/product"}
+                                        state={{product: item}}
+                                        className="font-weight-bold text-dark text-uppercase small"
+                                    >
+                                        {item.name}
+                                    </Link>
+                                </h6>
+                                <span className="text-muted">quantité : {item.quantity}</span>
+                                <br/>
+                                <span className="emphasis">
                   ${(item.price * item.quantity).toFixed(2)}
                 </span>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-      <Link
-        to="/cart"
-        className="btn btn-md btn-block btn-orange mt-3"
-        style={{ margin: 0 }}
-      >
-        voir le panier
-      </Link>
-    </div>
-  );
+                            </div>
+                        </li>
+                    );
+                })}
+            </ul>
+            <Link
+                to="/cart"
+                className="btn btn-md btn-block btn-orange mt-3"
+                style={{margin: 0}}
+            >
+                voir le panier
+            </Link>
+        </div>
+    );
 }
 
 // Composant Header pour afficher l'en-tête de la page
 function Header() {
-  const [currentLink] = React.useState("");
-  const [show, setShow] = React.useState(false);
-  const links = ["cart", "orders"];
-  const handleOnClick = () => setShow(!show);
-  const items = useSelector((state) => state.cart.items);
+    const [currentLink] = React.useState("");
+    const [show, setShow] = React.useState(false);
+    const links = ["cart", "orders"];
+    const handleOnClick = () => setShow(!show);
+    const {cart} = useCart();
 
-  return (
-    <header className="target-hover">
-      <nav className="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
-        <div className="container">
-          <Link
-            to="/"
-            className="navbar-brand font"
-            style={{ fontSize: "30px" }}
-          >
-            CLICK & COLLECT
-          </Link>
-          {/* <button
+    return (
+        <header className="target-hover">
+            <nav className="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
+                <div className="container">
+                    <Link
+                        to="/"
+                        className="navbar-brand font"
+                        style={{fontSize: "30px"}}
+                    >
+                        CLICK & COLLECT
+                    </Link>
+                    {/* <button
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
@@ -99,38 +97,38 @@ function Header() {
           >
             <span className="navbar-toggler-icon">hello</span>
           </button> */}
-          <div className="navbar-collapse collapse" id="navbarNav3">
-            <ul className="navbar-nav ml-auto">
-              {links.map((link, index) => {
-                const isCurrent = link === currentLink;
-                const isActive = link === currentLink && "active";
-                return (
-                  <li key={index} className={`nav-item ${isActive}`}>
-                    <Link
-                      to={link}
-                      className="nav-link"
-                      aria-current={isCurrent}
-                    >
-                      {link}
-                    </Link>
-                  </li>
-                );
-              })}
+                    <div className="navbar-collapse collapse" id="navbarNav3">
+                        <ul className="navbar-nav ml-auto">
+                            {links.map((link, index) => {
+                                const isCurrent = link === currentLink;
+                                const isActive = link === currentLink && "active";
+                                return (
+                                    <li key={index} className={`nav-item ${isActive}`}>
+                                        <Link
+                                            to={link}
+                                            className="nav-link"
+                                            aria-current={isCurrent}
+                                        >
+                                            {link}
+                                        </Link>
+                                    </li>
+                                );
+                            })}
 
-              <li className="nav-item dropdown" onClick={() => setShow(!show)}>
-                <a className={`nav-link dropdown-toggle ${show && "show"}`}>
-                  <i className="fas fa-shopping-cart"></i>
-                  <span className="badge bg-orange">{items.length}</span>
-                </a>
-                <CartDropdown show={show} handleOnClick={handleOnClick} />
-              </li>
-            </ul>
-            <GoogleBtn />
-          </div>
-        </div>
-      </nav>
-    </header>
-  );
+                            <li className="nav-item dropdown" onClick={() => setShow(!show)}>
+                                <a className={`nav-link dropdown-toggle ${show && "show"}`}>
+                                    <i className="fas fa-shopping-cart"></i>
+                                    <span className="badge bg-orange">{cart.length}</span>
+                                </a>
+                                <CartDropdown show={show} handleOnClick={handleOnClick}/>
+                            </li>
+                        </ul>
+                        <GoogleBtn/>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    );
 }
 
 export default Header; // Exporte le composant Header

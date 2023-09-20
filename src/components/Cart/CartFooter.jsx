@@ -1,13 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import selectCartTotal from "../../lib/redux/selector/index.js";
-import { useSelector } from "react-redux";
+import {Link} from "react-router-dom";
+import {useCart} from "./cartContext.jsx";
 
 function CartFooter() {
   // Sélectionner le total du panier à l'aide du sélecteur selectCartTotal
-  const total = useSelector(selectCartTotal);
-  // Sélectionner les articles du panier à l'aide du sélecteur useSelector
-  const items = useSelector((state) => state.cart.items);
+  const {cart, total} = useCart();
 
   return (
     <>
@@ -22,10 +19,10 @@ function CartFooter() {
         {/* Lien pour procéder au paiement avec condition de désactivation si le panier est vide */}
         <Link
           className={`btn btn-primary mb-4 btn-lg pl-5 pr-5 ${
-            items.length === 0 ? "disabled" : ""
+            cart.length === 0 ? "disabled" : ""
           }`}
           to="/checkout"
-          style={items.length === 0 ? { pointerEvents: "none" } : {}}
+          style={cart.length === 0 ? { pointerEvents: "none" } : {}}
         >
           Procéder au paiement
         </Link>
