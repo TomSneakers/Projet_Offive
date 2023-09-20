@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUserProfile } from "../../lib/redux/reducers/user";
 import { useNavigate } from "react-router-dom";
+import {useCart} from "../Cart/cartContext.jsx";
 
 const styles = {
   valid: {
@@ -14,7 +15,7 @@ const styles = {
 };
 
 function Checkout() {
-  const dispatch = useDispatch();
+  const {cart, saveOrder} = useCart();
   let navigate = useNavigate();
   const { current } = useSelector((state) => state.user);
 
@@ -23,11 +24,13 @@ function Checkout() {
     givenName: current?.givenName,
     familyName: current?.familyName,
     email: current?.email,
+    phone: ""
   });
   const [required, setRequired] = useState({
     givenName: false,
     familyName: false,
     email: false,
+    phone: true
   });
 
   // Gérer les changements dans les champs de saisie
@@ -40,8 +43,9 @@ function Checkout() {
   // Gérer la soumission du formulaire
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUserProfile(clientDetails));
-    navigate("/payment");
+    saveOrder(cart, clientDetails).then(() => {
+        navigate("/payment");
+    });
   };
 
   // Mettre à jour les détails du client lorsqu'ils changent dans le store Redux
@@ -141,7 +145,28 @@ function Checkout() {
                   onChange={handleOnChange}
                 />
                 <small
-                  style={!!clientDetails.email ? styles.valid : styles.errors}
+                  style={!clientDetails.email ? styles.valid : styles.errors}
+                >
+                  Veuillez entrer une adresse e-mail valide pour les mises à
+                  jour de commande.
+                </small>
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="email">
+                  Numéro de télephone
+                </label>
+                <input
+                    className="form-control"
+                    type="text"
+                    name="phone"
+                    id="phone"
+                    placeholder="06 12 34 56 78"
+                    value={clientDetails.email}
+                    onChange={handleOnChange}
+                />
+                <small
+                    style={!clientDetails.phone !== "" ? styles.valid : styles.errors}
                 >
                   Veuillez entrer une adresse e-mail valide pour les mises à
                   jour de commande.

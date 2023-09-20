@@ -38,22 +38,6 @@ export function resetCart() {
     }
 }
 
-// Créateur d'action pour retirer un élément du panier
-export function removeFromCart(id) {
-    return {
-        type: "REMOVE_FROM_CART", // Type d'action correspondant au retrait d'un élément du panier
-        payload: { id } // Données associées à l'action (ici, l'ID de l'élément à retirer)
-    }
-}
-
-// Créateur d'action pour mettre à jour la quantité d'un élément du panier
-export function updateCart(id, quantity) {
-    return {
-        type: "UPDATE_CART", // Type d'action correspondant à la mise à jour de la quantité
-        payload: { id, quantity }, // Données associées à l'action (ici, l'ID de l'élément et la nouvelle quantité)
-    }
-}
-
 // Créateur d'action pour ajouter un élément au panier
 export function addToCart(item) {
     return {

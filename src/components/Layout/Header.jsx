@@ -5,7 +5,7 @@ import GoogleBtn from "./GoogleBtn";
 import {useCart} from "../Cart/cartContext.jsx";
 
 // Composant CartDropdown pour afficher le panier déroulant
-function CartDropdown({show, handleOnClick}) {
+function  CartDropdown({show, handleOnClick}) {
     const {cart, total} = useCart();
 
     return (
@@ -19,7 +19,7 @@ function CartDropdown({show, handleOnClick}) {
         <span>
           {cart.length} {!!cart.length && "articles"}
         </span>
-                <span className="emphasis">€{total.toFixed(2)}</span>
+                <span className="emphasis">{total}€</span>
             </div>
             <div className="dropdown-divider"></div>
             <ul
@@ -46,10 +46,9 @@ function CartDropdown({show, handleOnClick}) {
                                         {item.name}
                                     </Link>
                                 </h6>
-                                <span className="text-muted">quantité : {item.quantity}</span>
                                 <br/>
                                 <span className="emphasis">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  ${(item.price).toFixed(2)}
                 </span>
                             </div>
                         </li>
@@ -65,6 +64,7 @@ function CartDropdown({show, handleOnClick}) {
             </Link>
         </div>
     );
+
 }
 
 // Composant Header pour afficher l'en-tête de la page
@@ -86,17 +86,6 @@ function Header() {
                     >
                         CLICK & COLLECT
                     </Link>
-                    {/* <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav3"
-            aria-controls="navbarNav3"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon">hello</span>
-          </button> */}
                     <div className="navbar-collapse collapse" id="navbarNav3">
                         <ul className="navbar-nav ml-auto">
                             {links.map((link, index) => {

@@ -17,9 +17,10 @@ function Cart() {
       {/* Affiche un message si le panier est vide */}
       {!cart.length && <div>Aucun article dans votre panier</div>}
       <tbody>
-        {cart.map((item) => (
+        {cart.map((item, index) => (
           <Row
             key={item.id}
+            index={index}
             {...item}
           /> /* Affiche chaque article à l'aide du composant Row */
         ))}
