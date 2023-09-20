@@ -5,18 +5,18 @@ function Row({ id, name, price, quantity, category, imageUrl }) {
   const dispatch = useDispatch(); // Initialise le dispatch pour envoyer des actions Redux
 
   // Gère le changement de quantité dans l'input
-  const handleOnChange = (e) => {
-    const newValue = Number(e.target.value);
-    const newQuantity = newValue >= 1 ? newValue : 1;
-    dispatch(updateCart(id, newQuantity)); // Appelle l'action pour mettre à jour la quantité dans le panier
-  };
+  // const handleOnChange = (e) => {
+  //   const newValue = Number(e.target.value);
+  //   const newQuantity = newValue >= 1 ? newValue : 1;
+  //   dispatch(updateCart(id, newQuantity)); // Appelle l'action pour mettre à jour la quantité dans le panier
+  // };
 
   // Gère le clic sur le bouton de suppression d'article
   const handleOnClick = () => {
     dispatch(removeFromCart(id)); // Appelle l'action pour supprimer l'article du panier
   };
 
-  const totalPrice = price * quantity; // Calcule le prix total pour cet article
+  // Calcule le prix total pour cet article
   return (
     <tr>
       <td data-th="Produit" style={{ width: "60%" }}>
@@ -34,12 +34,12 @@ function Row({ id, name, price, quantity, category, imageUrl }) {
         </div>
       </td>
       <td data-th="Prix total" style={{ width: "12%" }}>
-        €{totalPrice.toFixed(2)}
+        €{price.toFixed(2)}
       </td>
       <td data-th="Prix Unitaire" style={{ width: "12%" }}>
         €{price}
       </td>
-      <td data-th="Quantité">
+      {/* <td data-th="Quantité">
         <input
           type="number"
           className="form-control form-control-lg text-center"
@@ -47,7 +47,7 @@ function Row({ id, name, price, quantity, category, imageUrl }) {
           onChange={handleOnChange} // Appelle la fonction de gestion du changement de quantité
           style={{ width: "60%" }}
         />
-      </td>
+      </td> */}
 
       <td className="actions" data-th="">
         <div className="text-right">

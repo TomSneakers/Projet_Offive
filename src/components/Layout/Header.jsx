@@ -48,11 +48,7 @@ function CartDropdown({ show, handleOnClick }) {
                     {item.name}
                   </Link>
                 </h6>
-                <span className="text-muted">quantité : {item.quantity}</span>
-                <br />
-                <span className="emphasis">
-                  ${(item.price * item.quantity).toFixed(2)}
-                </span>
+                <span className="emphasis">€{item.price.toFixed(2)}</span>
               </div>
             </li>
           );
