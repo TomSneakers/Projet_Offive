@@ -11,6 +11,7 @@ function Product() {
 
   // États locaux pour les détails du produit (quantité et taille) et le prix
   const [price, setPrice] = useState(product.prices["sm"]);
+  const [size, setSize] = useState("sm");
 
   // Fonction pour ajouter le produit au panier
   const addCart = () => {
@@ -21,14 +22,16 @@ function Product() {
       price: price,
       imageUrl: product.imageUrl,
       category: product.category,
+      size
     };
    updateCart(item);
   };
 
   // Gestionnaire de changement pour les entrées de l'utilisateur
   const handleOnChange = (e) => {
-    const selectedPrice = e.target.value;
-    setPrice(product.prices[selectedPrice]);
+    const selectedSize = e.target.value;
+    setSize(selectedSize);
+    setPrice(product.prices[selectedSize]);
   };
 
   // Rendu du composant Product
