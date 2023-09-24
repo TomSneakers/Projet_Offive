@@ -16,7 +16,7 @@ function Orders() {
     GET_ORDERS().then((response) => {
       const orders = response.filter(
         (item) => item.ownerId === current?.googleId
-      );
+      ).reverse();
       setItems(orders);
       setLoading(false);
     });

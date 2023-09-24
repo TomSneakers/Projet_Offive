@@ -1,4 +1,4 @@
-function Row({ date, id }) {
+function Row({ date, _id }) {
   // Définit la fonction 'Row' prenant les propriétés 'date' et 'id' en entrée.
 
   // Convertir l'horodatage Unix en objet Date
@@ -18,7 +18,7 @@ function Row({ date, id }) {
     <tr>
       {/* Colonne 'Produit' */}
       <td data-th="Produit">
-        <h4>Commande n° {id}</h4>
+        <h4>Commande n° {_id}</h4>
         <p className="font-weight-light">Date : {formattedDateTimeString}</p>
       </td>
 

@@ -6,13 +6,10 @@ export async function GET_ORDERS() {
   return result.json();
 }
 
-export async function AddOrder(cart, clientDetails) {
+export async function AddOrder(order) {
   const result = await fetch("http://localhost:2023/orders", {
     method: "post",
-    body: JSON.stringify({
-      items: cart,
-      clientDetails: clientDetails,
-    }),
+    body: JSON.stringify({...order}),
     headers: {
       "Content-Type": "application/json",
     },

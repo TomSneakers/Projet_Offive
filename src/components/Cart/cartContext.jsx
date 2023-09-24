@@ -29,12 +29,8 @@ export function CartProvider({children}) {
         setCart(newCart);
     }
 
-    async function saveOrders(clientDetails){
-        return AddOrder(cart, clientDetails);
-    }
-
     return (
-        <CartContext.Provider value={{cart, total, updateCart, removeFromCart, saveOrders}}>
+        <CartContext.Provider value={{cart, total, updateCart, removeFromCart}}>
             {children}
         </CartContext.Provider>
     );
