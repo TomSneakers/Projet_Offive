@@ -7,7 +7,7 @@ export async function GET_ORDERS() {
 }
 
 export async function AddOrder(order) {
-  const result = await fetch("http://localhost:2023/orders", {
+  const result = await fetch("http://api.ofive.82-165-244-144.plesk.page:2023/orders", {
     method: "post",
     body: JSON.stringify({...order}),
     headers: {
@@ -38,12 +38,12 @@ export const ADD_ORDER = gql`
 `;
 
 async function getAllProducts() {
-  const result = await fetch("http://localhost:2023/products", { method: "get" });
+  const result = await fetch("http://api.ofive.82-165-244-144.plesk.page:2023/products", { method: "get" });
   return result.json();
 }
 
 async function getProducts(category) {
-  const result = await fetch(`http://localhost:2023/products/${category}`, { method: "get" });
+  const result = await fetch(`http://api.ofive.82-165-244-144.plesk.page:2023/${category}`, { method: "get" });
   return result.json();
 }
 
