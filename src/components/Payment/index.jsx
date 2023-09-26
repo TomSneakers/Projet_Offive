@@ -135,7 +135,7 @@ function Payment() {
         <div className="row justify-content-center rounded shadow pt-5 pb-5 bg-white ">
           <div className="col-md-4 offset-1 order-md-2 mb-4">
             <h4 className="d-flex justify-content-between align-items-center mb-3">
-              <span className="text-muted">Your cart</span>
+              <span className="text-muted">Votre panier</span>
             </h4>
             <ul className="list-group mb-3">
               {items?.map((item) => (

@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import selectCartTotal from "../../lib/redux/selector";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import GoogleBtn from "./GoogleBtn";
 
-// Composant CartDropdown pour afficher le panier déroulant
 function CartDropdown({ show, handleOnClick }) {
   const items = useSelector((state) => state.cart.items);
   const total = useSelector(selectCartTotal);
@@ -55,36 +54,36 @@ function CartDropdown({ show, handleOnClick }) {
         })}
       </ul>
       <Link
-        to="/cart"
+        to="/Panier"
         className="btn btn-md btn-block btn-orange mt-3"
         style={{ margin: 0 }}
       >
-        voir le panier
+        Voir le panier
       </Link>
     </div>
   );
 }
 
-// Composant Header pour afficher l'en-tête de la page
 function Header() {
-  const [currentLink] = React.useState("");
-  const [show, setShow] = React.useState(false);
-  const links = ["cart", "orders"];
+  const [currentLink] = useState("");
+  const [show, setShow] = useState(false);
+  const links = ["Panier", "Commandes"];
   const handleOnClick = () => setShow(!show);
   const items = useSelector((state) => state.cart.items);
 
   return (
     <header className="target-hover">
-      <nav className="navbar navbar-dark bg-dark navbar-expand-md fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div className="container">
-          <Link
-            to="/"
-            className="navbar-brand font"
-            style={{ fontSize: "30px" }}
-          >
-            CLICK & COLLECT
+          <Link to="/" className="navbar-brand font">
+            <img
+              src="/logo.png" // Assurez-vous que le chemin de l'image est correct et relatif au répertoire public de votre projet.
+              alt="Logo"
+              style={{ width: "150px", height: "150px", margin: "-50px" }}
+            />
           </Link>
-          {/* <button
+
+          <button
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
@@ -93,9 +92,9 @@ function Header() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon">hello</span>
-          </button> */}
-          <div className="navbar-collapse collapse" id="navbarNav3">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav3">
             <ul className="navbar-nav ml-auto">
               {links.map((link, index) => {
                 const isCurrent = link === currentLink;
@@ -112,9 +111,11 @@ function Header() {
                   </li>
                 );
               })}
-
-              <li className="nav-item dropdown" onClick={() => setShow(!show)}>
-                <a className={`nav-link dropdown-toggle ${show && "show"}`}>
+              <li
+                className={`nav-item dropdown ${show && "show"}`}
+                onClick={handleOnClick}
+              >
+                <a className="nav-link dropdown-toggle" href="#" role="button">
                   <i className="fas fa-shopping-cart"></i>
                   <span className="badge bg-orange">{items.length}</span>
                 </a>
@@ -129,4 +130,4 @@ function Header() {
   );
 }
 
-export default Header; // Exporte le composant Header
+export default Header;
