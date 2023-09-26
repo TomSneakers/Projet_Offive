@@ -36,8 +36,8 @@ function Product() {
 
   // Rendu du composant Product
   return (
-    <section className="pt-5 pb-5">
-      <div className="container">
+    <section className="product">
+      <div className="container ">
         <div className="row">
           <div className="col-md-6 text-center">
             <div className="product-image d-block mt-3">
@@ -49,13 +49,13 @@ function Product() {
             </div>
           </div>
           <div className="col-md-6 mt-5 mt-md-2 text-center text-md-left">
-            <h2 className="mb-3 mt-0">{product.name}</h2>
-            <p className="lead mt-2 mb-3 primary-color">{price}€</p>
-            <h5 className="mt-4">Description</h5>
+            <h2 className="title_product">{product.name}</h2>
+            <p className="price">{price}€</p>
+            <h2 className="title_product">Description</h2>
             <p>{product.description}</p>
             <div className="row mt-4">
-              <div className="col-6">
-                <label htmlFor="size">Size</label>
+              <div className="">
+                <h2 className="title_product">Taille de la pizza</h2>
                 <select
                   defaultValue="sm"
                   name="size"
@@ -72,11 +72,7 @@ function Product() {
                 </select>
               </div>
             </div>
-            <button
-              type="button"
-              className="btn btn-block btn-lg border border-orange text-orange"
-              onClick={addCart}
-            >
+            <button type="button" className="button_add" onClick={addCart}>
               Ajouter au panier
             </button>
           </div>

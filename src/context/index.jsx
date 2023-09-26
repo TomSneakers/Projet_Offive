@@ -5,7 +5,7 @@ export const Context = React.createContext();
 
 // Définition du composant 'FilterProvider'
 const FilterProvider = ({ children }) => {
-  const categories = ["Women", "Men", "Kids", "Accessories"]; // Tableau des catégories disponibles
+  const categories = ["Base Crème", "Base Tomate", "Boisson", "Dessert"]; // Tableau des catégories disponibles
   const filters = ["Top", "Bottom", "Jacket"]; // Tableau des filtres disponibles
   const [category, setCategory] = React.useState(""); // État pour stocker la catégorie sélectionnée
   const [filtersChecked, setFiltersChecked] = React.useState({
@@ -26,7 +26,11 @@ const FilterProvider = ({ children }) => {
   }, [category]);
 
   // Rendu du contexte avec la valeur fournie et les enfants (components enfants)
-  return <Context.Provider value={value}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={value}>
+      <div className="category">{children}</div>
+    </Context.Provider>
+  );
 };
 
 // Fonction utilitaire pour fournir le contexte à un composant enfant

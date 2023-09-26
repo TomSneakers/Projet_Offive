@@ -24,12 +24,44 @@ a:hover {
   color: #535bf2;
 }
 
+.product {
+  background-color: #1a1a1a90;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  padding-top: 100px;
+  /* 100% de la hauteur de la vue (viewport) */
+}
+
+.price {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.title_product {
+  color: #9d9d9d;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 0px;
+
+}
+
+.button_add {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #ffffff00;
+  border: 3px solid #535bf2;
+}
+
 body {
   margin: 0;
-  display: flex;
+  /* display: flex; */
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  /* 100% de la hauteur de la vue (viewport) */
 }
 
 h1 {
@@ -72,6 +104,21 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.category {
+  color: #f9f9f9;
+  font-weight: bold;
+  font-size: large;
+}
+
+.bg-image {
+  background-image: url('/Users/tomdesvignes/Projet/Projet_Offive/public/background.png');
+  background-size: cover;
+  background-position: center;
+  /* Pour ajuster la taille de l'image en fonction de la taille de l'élément */
+  /* Autres styles CSS */
+}
+
 
 .btn-outline-custom-orange {
   color: #f90;
