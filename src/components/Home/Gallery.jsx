@@ -26,8 +26,6 @@ function Gallery() {
                    setLoading(false);
                })
                .catch((err) => {
-                   console.log(err);
-                   console.log("error1");
                    setError(true);
                    setLoading(false);
                });
@@ -41,8 +39,6 @@ function Gallery() {
                 setLoading(false);
             })
             .catch((err) => {
-                console.log(err);
-                console.log("error2");
                 setError(true);
                 setLoading(false);
             });

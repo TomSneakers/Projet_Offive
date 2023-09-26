@@ -27,7 +27,7 @@ function CartDropdown({ show, handleOnClick }) {
         className="shopping-cart-items pt-2 pl-0"
         aria-labelledby="dropdownCart"
       >
-        {items.map((item) => {
+        {cart.map((item) => {
           return (
             <li className="row mt-3" key={item.id}>
               <div className="col-md-4 col-2">
@@ -117,7 +117,7 @@ function Header() {
               >
                 <a className="nav-link dropdown-toggle" href="#" role="button">
                   <i className="fas fa-shopping-cart"></i>
-                  <span className="badge bg-orange">{items.length}</span>
+                  <span className="badge bg-orange">{cart.length}</span>
                 </a>
                 <CartDropdown show={show} handleOnClick={handleOnClick} />
               </li>
