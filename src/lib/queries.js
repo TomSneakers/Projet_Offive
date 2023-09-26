@@ -2,12 +2,12 @@ import { gql } from "@apollo/client";
 
 // Définition de la requête GraphQL GET_ORDERS
 export async function GET_ORDERS() {
-  const result = await fetch("http://localhost:2023/orders", { method: "get" });
+  const result = await fetch("http://ninoherran.fr:2023", { method: "get" });
   return result.json();
 }
 
 export async function AddOrder(order) {
-  const result = await fetch("http://api.ofive.82-165-244-144.plesk.page:2023/orders", {
+  const result = await fetch("http://ninoherran.fr:2023/orders", {
     method: "post",
     body: JSON.stringify({...order}),
     headers: {
@@ -38,12 +38,12 @@ export const ADD_ORDER = gql`
 `;
 
 async function getAllProducts() {
-  const result = await fetch("http://api.ofive.82-165-244-144.plesk.page:2023/products", { method: "get" });
+  const result = await fetch("http://ninoherran.fr:2023/products", { method: "get" });
   return result.json();
 }
 
 async function getProducts(category) {
-  const result = await fetch(`http://api.ofive.82-165-244-144.plesk.page:2023/${category}`, { method: "get" });
+  const result = await fetch(`http://ninoherran.fr:2023/products/${category}`, { method: "get" });
   return result.json();
 }
 
