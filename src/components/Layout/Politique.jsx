@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function Politique() {
   return (
-    <div className="container mt-5">
+    <div className="container politiques">
       <h1 className="mb-4">Politique de Confidentialité</h1>
 
       <p>

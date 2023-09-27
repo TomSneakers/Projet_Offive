@@ -28,7 +28,7 @@ const FilterProvider = ({ children }) => {
   // Rendu du contexte avec la valeur fournie et les enfants (components enfants)
   return (
     <Context.Provider value={value}>
-      <div className="category">{children}</div>
+      <div className="font_category">{children}</div>
     </Context.Provider>
   );
 };

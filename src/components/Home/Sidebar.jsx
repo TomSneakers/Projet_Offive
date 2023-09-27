@@ -4,7 +4,7 @@ import Filters from "./Filters.jsx"; // Importe le composant Filters
 // Composant Sidebar pour la barre latérale
 function Sidebar({ categories, filters }) {
   return (
-    <div className="col-md-4 order-md-1 col-lg-3 sidebar-filter">
+    <div className="col-md-4 order-md-1 col-lg-3 sidebar-filter box_category">
       <h6 className="text-uppercase font-weight-bold mb-3">Catégories</h6>
       {categories.map((filter, index) => (
         <Filters.Category key={index} index={index} name={filter} />

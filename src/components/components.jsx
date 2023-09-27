@@ -2,27 +2,25 @@
 export function Table({ children, items = [], heading, subheading }) {
   // Rendu du composant 'Table'
   return (
-    <section className="pt-5 pb-5">
+    <section className="cart-table">
       <div className="container">
         <div className="row">
-          <div className="col-md-8 offset-2">
-            <h3 className="display-5 mb-2 text-center">{heading}</h3>
-            <p className="mb-5 text-center">
-              <i className="text-info font-weight-bold">{items.length}</i>
+          <div className="col-md-8 offset-md-2">
+            <h3 className="table-heading text-center">{heading}</h3>
+            <p className="table-subheading text-center">
+              <span className="table-item-count">{items.length}</span>{" "}
               {subheading}
             </p>
           </div>
         </div>
       </div>
-      <div className="table-responsive">
-        <table id="shoppingCart" className="table table-condensed">
+      <div className="table-container">
+        <table className="table table-striped">
           <thead>
             <tr>
-              <th style={{ width: "60%" }}>Produit</th>
-              <th style={{ width: "12%" }}>Prix</th>
-              <th style={{ width: "12%" }}>Prix Unitaire</th>
-              <th style={{ width: "10%" }}>Quantité</th>
-              <th style={{ width: "16%" }}></th>
+              <th className="product-cell">Produit</th>
+              <th className="price-cell">Prix</th>
+              <th className="unit-price-cell">Prix Unitaire</th>
             </tr>
           </thead>
           <tbody>{children}</tbody>

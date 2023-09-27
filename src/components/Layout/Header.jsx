@@ -67,9 +67,10 @@ function CartDropdown({ show, handleOnClick }) {
 function Header() {
   const [currentLink] = React.useState("");
   const [show, setShow] = React.useState(false);
-  const links = ["cart", "orders"];
+  const links = ["Panier", "Commandes"];
   const handleOnClick = () => setShow(!show);
   const { cart } = useCart();
+  const [showResponsive, setShowResponsive] = React.useState(false);
 
   return (
     <header className="target-hover">
@@ -79,7 +80,7 @@ function Header() {
             <img
               src="/logo.png" // Assurez-vous que le chemin de l'image est correct et relatif au répertoire public de votre projet.
               alt="Logo"
-              style={{ width: "150px", height: "150px", margin: "-50px" }}
+              className="logo"
             />
           </Link>
 
@@ -87,10 +88,11 @@ function Header() {
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNav3"
+            data-bs-target="navbarNav3"
             aria-controls="navbarNav3"
             aria-expanded="false"
             aria-label="Toggle navigation"
+            onClick={() => setShowResponsive(!showResponsive)}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -124,6 +126,28 @@ function Header() {
             </ul>
             <GoogleBtn />
           </div>
+          {showResponsive && (
+            <div className="responsive">
+              <ul className="navbar-nav ml-auto">
+                {links.map((link, index) => {
+                  const isCurrent = link === currentLink;
+                  const isActive = link === currentLink && "active";
+                  return (
+                    <li key={index} className={`nav-item ${isActive}`}>
+                      <Link
+                        to={link}
+                        className="nav-link"
+                        aria-current={isCurrent}
+                      >
+                        {link}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+              <GoogleBtn />
+            </div>
+          )}
         </div>
       </nav>
     </header>

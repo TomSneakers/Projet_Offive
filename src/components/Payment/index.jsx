@@ -7,11 +7,9 @@ import selectCartTotal from "../../lib/redux/selector/index.js";
 import Alert from "./Alert.jsx";
 import Row from "./Row.jsx";
 import { scrolltoTop, nextDayDelevery } from "./utils.js";
-import { ADD_ORDER } from "../../lib/queries.js";
-import { useMutation } from "@apollo/client";
 import { resetCart } from "../../lib/redux/reducers/cart.js";
 import { useNavigate } from "react-router-dom";
-import {useCart} from "../Cart/cartContext.jsx";
+import { useCart } from "../Cart/cartContext.jsx";
 const styles = {
   width: "100%",
   shape: "rect",
@@ -38,10 +36,9 @@ const STATUS = {
 function Payment() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {cart} = useCart();
-  const {total} = useCart();
+  const { cart } = useCart();
+  const { total } = useCart();
   const { current } = useSelector((state) => state.user);
-  const [mutate, loading] = useMutation(ADD_ORDER);
   const [isValid, setValid] = useState(false);
   const [status, setStatus] = useState(STATUS.PENDING);
 
@@ -66,7 +63,6 @@ function Payment() {
         total: total,
         items: cart,
       };
-      mutate({ variables: newOrder });
       console.log("order successfully confirmed and added", newOrder);
       resolve();
     });
@@ -86,7 +82,7 @@ function Payment() {
     await addOrder();
     await confirmOrder();
     await scrolltoTop();
-    setTimeout(() => navigate("/"), 3000);
+    setTimeout(() => navigate("/Confirmed"), 3000);
   };
 
   const onSuccess = async (payment) => {
@@ -128,74 +124,71 @@ function Payment() {
         <Alert.Confirmed status={status === STATUS.CONFIRMED} />
         <Alert.Cancelled status={status === STATUS.CANCELLED} />
         <Alert.Error status={status === STATUS.FAILED} />
-        <div className="py-5 text-center row justify-content-center">
-          <div className="col-md-10">
-            <h2>Checkout</h2>
-          </div>
-        </div>
-        <div className="row justify-content-center rounded shadow pt-5 pb-5 bg-white ">
-          <div className="col-md-4 offset-1 order-md-2 mb-4">
-            <h4 className="d-flex justify-content-between align-items-center mb-3">
-              <span className="text-muted">Votre panier</span>
-            </h4>
-            <ul className="list-group mb-3">
-              {cart?.map((item) => (
-                <Row key={item} {...item} />
-              ))}
-              <li className="list-group-item d-flex justify-content-between">
-                <span>Total (EUR)</span>
-                <strong>€{total.toFixed(2) || "0.00"}</strong>
-              </li>
-            </ul>
-            <form className="card p-2">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Promo code"
-                />
-                <div className="input-group-append">
-                  <button type="submit" className="btn btn-secondary">
-                    Redeem
-                  </button>
+        <div className="paiement">
+          <div className="row justify-content-center rounded shadow pt-5 pb-5 bg-white">
+            <div className="col-md-4 offset-1 order-md-2 mb-4">
+              <h4 className="d-flex justify-content-between align-items-center mb-3">
+                <span className="text-muted">Votre panier</span>
+              </h4>
+              <ul className="list-group mb-3">
+                {cart?.map((item) => (
+                  <Row key={item} {...item} />
+                ))}
+                <li className="list-group-item d-flex justify-content-between">
+                  <span>Total (EUR)</span>
+                  <strong>€{total.toFixed(2) || "0.00"}</strong>
+                </li>
+              </ul>
+              <form className="card p-2">
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Promo code"
+                  />
+                  <div className="input-group-append">
+                    <button type="submit" className="btn btn-secondary">
+                      Redeem
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </form>
-          </div>
-          <div className="col-md-6 order-md-1">
-            <form onSubmit={handleOnSubmit}>
-              <h4 className="mb-3">Payment</h4>
-              <hr className="mb-4" />
+              </form>
+            </div>
+            <div className="col-md-6 order-md-1">
+              <form onSubmit={handleOnSubmit}>
+                <h4 className="mb-3">Payment</h4>
+                <hr className="mb-4" />
 
-              {/* Paypal Button */}
-              <PayPalButtons
-                env={client.env}
-                client={client}
-                createOrder={(data, actions) => {
-                  return actions.order.create({
-                    purchase_units: [
-                      {
-                        amount: {
-                          value: total, // Utilisez le montant réel de la commande ici
+                {/* Paypal Button */}
+                <PayPalButtons
+                  env={client.env}
+                  client={client}
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            value: total, // Utilisez le montant réel de la commande ici
+                          },
                         },
-                      },
-                    ],
-                  });
-                }}
-                onError={onError}
-                onApprove={onSuccess}
-                onCancel={onCancel}
-              />
+                      ],
+                    });
+                  }}
+                  onError={onError}
+                  onApprove={onSuccess}
+                  onCancel={onCancel}
+                />
 
-              <hr className="mb-4" />
-              <button
-                className="btn btn-primary btn-lg btn-block"
-                type="submit"
-                disabled={!isValid}
-              >
-                <i className="far fa-credit-card"></i> Confirm
-              </button>
-            </form>
+                <hr className="mb-4" />
+                <button
+                  className="btn btn-primary btn-lg btn-block"
+                  type="submit"
+                  disabled={!isValid}
+                >
+                  <i className="far fa-credit-card"></i> Confirm
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

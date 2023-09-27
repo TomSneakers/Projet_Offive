@@ -1,13 +1,13 @@
-import React, {useState} from "react"; // Importation du module 'React' et 'useState' depuis la bibliothèque React
-import {Link, useLocation} from "react-router-dom"; // Importation des composants 'Link' et 'useLocation' depuis 'react-router-dom'
+import React, { useState } from "react"; // Importation du module 'React' et 'useState' depuis la bibliothèque React
+import { Link, useLocation } from "react-router-dom"; // Importation des composants 'Link' et 'useLocation' depuis 'react-router-dom'
 import "bootstrap/dist/css/bootstrap.min.css";
-import {useCart} from "./Cart/cartContext.jsx"; // Importation des styles Bootstrap
+import { useCart } from "./Cart/cartContext.jsx"; // Importation des styles Bootstrap
 
 // Définition du composant 'Product'
 function Product() {
   const location = useLocation(); // Récupération de l'emplacement courant depuis 'useLocation'
   const product = location.state.product; // Extraction du produit à partir de l'emplacement
-  const {updateCart} = useCart();
+  const { updateCart } = useCart();
 
   // États locaux pour les détails du produit (quantité et taille) et le prix
   const [price, setPrice] = useState(product.prices["sm"]);
@@ -22,9 +22,9 @@ function Product() {
       price: price,
       imageUrl: product.imageUrl,
       category: product.category,
-      size
+      size,
     };
-   updateCart(item);
+    updateCart(item);
   };
 
   // Gestionnaire de changement pour les entrées de l'utilisateur
@@ -33,7 +33,10 @@ function Product() {
     setSize(selectedSize);
     setPrice(product.prices[selectedSize]);
   };
-
+  const imageStyle = {
+    maxWidth: "100%", // Pour assurer la largeur maximale
+    height: "auto", // Pour maintenir le rapport hauteur/largeur
+  };
   // Rendu du composant Product
   return (
     <section className="product">
@@ -42,9 +45,10 @@ function Product() {
           <div className="col-md-6 text-center">
             <div className="product-image d-block mt-3">
               <img
-                className="img-fluid"
                 src={product.imageUrl}
                 alt={product.name}
+                className="img-fluid product-img"
+                style={imageStyle} // Appliquez le style ici
               />
             </div>
           </div>
@@ -52,7 +56,7 @@ function Product() {
             <h2 className="title_product">{product.name}</h2>
             <p className="price">{price}€</p>
             <h2 className="title_product">Description</h2>
-            <p>{product.description}</p>
+            <p className="price">{product.description}</p>
             <div className="row mt-4">
               <div className="">
                 <h2 className="title_product">Taille de la pizza</h2>
